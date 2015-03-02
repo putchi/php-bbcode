@@ -13,6 +13,16 @@ class BBCode {
   
   public function __construct () {
     
+    // Replace [br] with <br />
+    $this->bbcode_table["/\[br\]/is"] = function ($match) {
+      return "<br/>";
+    };
+
+    // Replace [p]...[/p] with <p>...</p>
+    $this->bbcode_table["/\[p\](.*?)\[\/p\]/is"] = function ($match) {
+      return "<p>$match[1]</p>";
+    };
+    
     // Replace [b]...[/b] with <strong>...</strong>
     $this->bbcode_table["/\[b\](.*?)\[\/b\]/is"] = function ($match) {
       return "<strong>$match[1]</strong>";
