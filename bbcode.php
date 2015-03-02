@@ -151,9 +151,9 @@ class BBCode {
     if (!$str) { 
       return "";
     }
-    
+      
     if ($escapeHTML) {
-      $str = htmlspecialchars($str);
+      $str = htmlspecialchars($str, ENT_NOQUOTES);
     }
 
     foreach($this->bbcode_table as $key => $val) {
