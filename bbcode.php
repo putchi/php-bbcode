@@ -142,9 +142,26 @@ class BBCode {
 
 
     // Replace [youtube]...[/youtube] with <iframe src="..."></iframe>
-    $this->bbcode_table["/\[youtube\](?:http?:\/\/)?(?:www\.)?youtu(?:\.be\/|be\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/i"] = function ($match) {
-      return "<iframe class=\"youtube-player\" type=\"text/html\" width=\"640\" height=\"385\" src=\"http://www.youtube.com/embed/$match[1]\" frameborder=\"0\"></iframe>";
+    $this->bbcode_table["/\[youtube\](?:https?:\/\/)?(?:www\.)?youtube(?:\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/is"] = function ($match) {
+      return "<iframe width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/$match[1]\" frameborder=\"0\" allowfullscreen></iframe>";
     };
+    
+	 // Alternative: Replace [youtube]...[/youtube] with <iframe src="..."></iframe>
+    $this->bbcode_table["/\[youtube\]([a-zA-Z0-9\-_]+)\[\/youtube\]/is"] = function ($match) {
+      return "<iframe width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/$match[1]\" frameborder=\"0\" allowfullscreen></iframe>";
+    };
+    
+    
+	  // Replace [youtube size=111X333]...[/youtube] with <iframe src="..."></iframe>
+    $this->bbcode_table["/\[youtube size=([0-9]{1,4}+)X([0-9]{1,4}+)\](?:https?:\/\/)?(?:www\.)?youtube(?:\.com\/watch\?v=)([A-Z0-9\-_]+)(?:&(.*?))?\[\/youtube\]/is"] = function ($match) {
+      return "<iframe width=\"$match[1]\" height=\"$match[2]\" src=\"https://www.youtube.com/embed/$match[3]\" frameborder=\"0\" allowfullscreen></iframe>";
+    };
+    
+	  // Alternative: Replace [youtube size=111X333]...[/youtube] with <iframe src="..."></iframe>
+    $this->bbcode_table["/\[youtube size=([0-9]{1,4}+)X([0-9]{1,4}+)\]([a-zA-Z0-9\-_]+)\[\/youtube\]/is"] = function ($match) {
+      return "<iframe width=\"$match[1]\" height=\"$match[2]\" src=\"https://www.youtube.com/embed/$match[3]\" frameborder=\"0\" allowfullscreen></iframe>";
+    };
+
   }
   
   public function toHTML ($str, $escapeHTML=false, $nr2br=false) {
