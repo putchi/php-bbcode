@@ -13,9 +13,13 @@ require "bbcode.php";
 
 $text=<<<EOF
 
+[br]
+
 [b]This is bold text[/b]
 
 [i]This is italic text[/i]
+
+[p]this is a paragraph - some text goes here...[/p]
 
 [code]This is pre-formatted text[/code]
 
@@ -23,13 +27,25 @@ $text=<<<EOF
 
 [quote="Obama"]This is a quote by a specific person[/quote]
 
-[size=30]This text's size is set at 30%[/size]
+[quote cite="https://www.google.com"]This is a quote[/quote]
+
+[quote="Obama" cite="https://www.google.com"]This is a quote by a specific person[/quote]
+
+[quote name="Obama"]This is a quote by a specific [q]person[/q][/quote]
+
+[quote name="Obama" cite="https://www.google.com"]This is a quote by a specific person[/quote]
+
+[size=30]This text's size is set at 30pt[/size]
 
 [s]This text has a strikethrough[/s]
 
 [u]This text is underlined.[/u]
 
+[left]This text is to the left[/left]
+
 [center]This text is centered[/center]
+
+[right]This text is to the right[/right]
 
 [color=red]This is red text[/color]
 
@@ -71,15 +87,23 @@ This is an ordered (alpha) list:
 [*][b]bold list item #3[/b]
 [/list]
 
-[youtube]http://youtu.be/DabwEqsWWiA&hd=1[/youtube]
+[youtube]oRdxUFDoQe0[/youtube]
 
-[youtube]http://www.youtube.com/watch?v=DabwEqsWWiA[/youtube]
+[youtube size=520X415]oRdxUFDoQe0[/youtube]
+
+[youtube]https://www.youtube.com/watch?v=oRdxUFDoQe0[/youtube]
+
+[youtube size=520X415]https://www.youtube.com/watch?v=oRdxUFDoQe0[/youtube]
 
 
 EOF;
 
 $bbcode = new BBCode;
-echo $bbcode->toHTML($text);  
+
+$formated_BBcode = $bbcode->checkTag($text);
+
+echo $bbcode->toHTML($formated_BBcode);  
+
 ?>
 ```
 
@@ -87,9 +111,13 @@ echo $bbcode->toHTML($text);
 
 ```html
 
+<br/>
+
 <strong>This is bold text</strong>
 
 <em>This is italic text</em>
+
+<p>this is a paragraph - some text goes here...</p>
 
 <pre><code>This is pre-formatted text</code><pre>
 
@@ -97,13 +125,23 @@ echo $bbcode->toHTML($text);
 
 Obama wrote: <blockquote><p>This is a quote by a specific person</p></blockquote>
 
+<blockquote cite="https://www.google.com"><p>This is a quote</p></blockquote>
+
+Obama wrote: <blockquote><p>This is a quote by a specific <q>person</q></p></blockquote>
+
+Obama wrote: <blockquote cite="https://www.google.com"><p>This is a quote by a specific person</p></blockquote>
+
 <span style="font-size:30%">This text's size is set at 30%</span>
 
 <del>This text has a strikethrough</del>
 
 <span style="text-decoration:underline;">This text is underlined.</span>
 
+<div style="text-align:left;">This text is centered</div>
+
 <div style="text-align:center;">This text is centered</div>
+
+<div style="text-align:right;">This text is centered</div>
 
 <span style="color:red;">This is red text</span>
 
@@ -131,9 +169,15 @@ This is an ordered (numbered) list:
 
 This is an ordered (alpha) list: 
 
-<ol style="list-style-type: lower-alpha"><li>list item #1</li><li>list item #2</li><li><strong>bold list item #3</strong></li></ol>
+<ol style="list-style-type: lower-alpha;"><li>list item #1</li><li>list item #2</li><li><strong>bold list item #3</strong></li></ol>
 
-<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/DabwEqsWWiA" frameborder="0"></iframe>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/oRdxUFDoQe0" frameborder="0" allowfullscreen></iframe>
 
-<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/DabwEqsWWiA" frameborder="0"></iframe>
+<iframe width="520" height="415" src="https://www.youtube.com/embed/oRdxUFDoQe0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/oRdxUFDoQe0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="520" height="415" src="https://www.youtube.com/embed/oRdxUFDoQe0" frameborder="0" allowfullscreen></iframe>
+
+
 ```
