@@ -66,8 +66,20 @@ class BBCode {
         };
 
 
+        // Replace [quote="person"]...[/quote] with person wrote: <blockquote><p>...</p></blockquote>
+        $this->bbcode_table["/\[quote=\"([^\"]+)\"\](.*?)\[\/quote\]/is"] = function ($match) {
+            return "<span class=\"author\">$match[1] wrote:</span><br/><blockquote><p>$match[2]</p></blockquote>";
+        };
+
+
         // Replace [quote name="person" cite="some cite source"]...[/quote] with person wrote: <blockquote cite="some cite source"><p>...</p></blockquote>
         $this->bbcode_table["/\[quote name=\"([^\"]+)\" cite=\"([^\"]+)\"\](.*?)\[\/quote\]/is"] = function ($match) {
+            return "<span class=\"author\">$match[1] wrote:</span><br/><blockquote cite=\"$match[2]\"><p>$match[3]</p></blockquote>";
+        };
+
+
+        // Replace [quote="person" cite="some cite source"]...[/quote] with person wrote: <blockquote cite="some cite source"><p>...</p></blockquote>
+        $this->bbcode_table["/\[quote=\"([^\"]+)\" cite=\"([^\"]+)\"\](.*?)\[\/quote\]/is"] = function ($match) {
             return "<span class=\"author\">$match[1] wrote:</span><br/><blockquote cite=\"$match[2]\"><p>$match[3]</p></blockquote>";
         };
 
@@ -77,13 +89,15 @@ class BBCode {
         // $this->bbcode_table["/\[quote=(.+?)\](.*?)\[\/quote\]/is"] = function ($match) {
         //   return "$match[1] wrote: <blockquote><p>$match[2]</p></blockquote>";
         // };
+
+
         // Replace [size=30]...[/size] with <span style="font-size:30pt">...</span>
         $this->bbcode_table["/\[size=(\d+)\](.*?)\[\/size\]/is"] = function ($match) {
             return "<span style=\"font-size:$match[1]pt;\">$match[2]</span>";
         };
 
 
-        // Replace [s] with <del>
+        // Replace [s]...[/s] with <del>...</del>
         $this->bbcode_table["/\[s\](.*?)\[\/s\]/is"] = function ($match) {
             return "<del>$match[1]</del>";
         };
@@ -164,7 +178,7 @@ class BBCode {
         };
 
 
-        // Replace [list=1|a]...[/list] with <ul|ol><li>...</li></ul|ol>
+        // Replace [list=1|a]...[/list] with <ol numeric|ol lower-alpha><li>...</li><ol>
         $this->bbcode_table["/\[list=(1|a)\](.*?)\[\/list\]/is"] = function ($match) {
             if ($match[1] == '1') {
                 $list_type = '<ol>';
@@ -288,7 +302,7 @@ class BBCode {
 
             $_index --;
         }
-        
+
         return $_value;
     }
 
@@ -305,7 +319,7 @@ class BBCode {
 
         return null;
     }
-    
+
     protected function tagEncode(
     $_tag, $_arguments = null, $_closed = "", $_property = ""
     ) {
