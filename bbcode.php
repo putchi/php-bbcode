@@ -139,21 +139,33 @@ class BBCode {
         };
 
 
+        // Replace [email subject=your subject]...[/email] with <a href="mailto:...?subject=your subject">...</a>
+        $this->bbcode_table["/\[email subject=(.*?)\](.*?)\[\/email\]/is"] = function ($match) {
+            return "<a href=\"mailto:$match[2]?subject=$match[1]\">$match[2]</a>";
+        };
+
+
         // Replace [email=someone@somewhere.com]An e-mail link[/email] with <a href="mailto:someone@somewhere.com">An e-mail link</a>
-        $this->bbcode_table["/\[email=(.*?)\](.*?)\[\/email\]/is"] = function ($match) {
+        $this->bbcode_table["/\[email=([^\s]+?)\](.*?)\[\/email\]/is"] = function ($match) {
             return "<a href=\"mailto:$match[1]\">$match[2]</a>";
+        };
+
+
+        // Replace [email=someone@somewhere.com subject=your subject]An e-mail link[/email] with <a href="mailto:someone@somewhere.com?subject=your subject">An e-mail link</a>
+        $this->bbcode_table["/\[email=([^\s]+?) subject=(.+?)\](.*?)\[\/email\]/is"] = function ($match) {
+            return "<a href=\"mailto:$match[1]?subject=$match[2]\">$match[3]</a>";
         };
 
 
         // Replace [url]...[/url] with <a href="...">...</a>
         $this->bbcode_table["/\[url\](.*?)\[\/url\]/is"] = function ($match) {
-            return "<a href=\"$match[1]\">$match[1]</a>";
+            return "<a href=\"$match[1]\" target=\"_blank\">$match[1]</a>";
         };
 
 
         // Replace [url=http://www.google.com/]A link to google[/url] with <a href="http://www.google.com/">A link to google</a>
         $this->bbcode_table["/\[url=(.*?)\](.*?)\[\/url\]/is"] = function ($match) {
-            return "<a href=\"$match[1]\">$match[2]</a>";
+            return "<a href=\"$match[1]\" target=\"_blank\">$match[2]</a>";
         };
 
 
@@ -167,6 +179,7 @@ class BBCode {
         $this->bbcode_table["/\[img alt=\"([^\"]+)\"\](.*?)\[\/img\]/is"] = function ($match) {
             return "<img src=\"$match[2]\" alt=\"$match[1]\"/>";
         };
+
 
         // Replace [list]...[/list] with <ul><li>...</li></ul>
         $this->bbcode_table["/\[list\](.*?)\[\/list\]/is"] = function ($match) {
