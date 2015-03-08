@@ -53,6 +53,10 @@ $text=<<<EOF
 
 [email=someone@somewhere.com]An e-mail link[/email]
 
+[email subject=my subject]someone@somewhere.com[/email]
+
+[email=someone@somewhere.com subject=my subject]An e-mail link with subject[/email]
+
 [url]http://www.google.com/[/url]
 
 [url=http://www.google.com/]Google.com yo![/url]
@@ -148,6 +152,10 @@ Obama wrote: <blockquote cite="https://www.google.com"><p>This is a quote by a s
 <a href="mailto:someone@somewhere.com">someone@somewhere.com</a>
 
 <a href="mailto:someone@somewhere.com">An e-mail link</a>
+
+<a href="mailto:someone@somewhere.com?subject=my subject">someone@somewhere.com</a>
+
+<a href="mailto:someone@somewhere.com?subject=my subject">An e-mail link with subject</a>
 
 <a href="http://www.google.com/">http://www.google.com/</a>
 
