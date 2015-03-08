@@ -61,8 +61,6 @@ This is an ordered (alpha) list:
 [*][b]bold list item #3[/b]
 [/list]
 
-[youtube]http://youtu.be/DabwEqsWWiA&hd=1[/youtube]
-
 [youtube]http://www.youtube.com/watch?v=DabwEqsWWiA[/youtube]
 
 
