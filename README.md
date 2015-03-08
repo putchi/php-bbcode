@@ -104,6 +104,7 @@ EOF;
 
 $bbcode = new BBCode;
 
+//will close unclosed bbcode tags.
 $formated_BBcode = $bbcode->checkTag($text);
 
 echo $bbcode->toHTML($formated_BBcode);  
